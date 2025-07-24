@@ -1,0 +1,37 @@
+# Jupyter-based MBDA Framework with GPU Support
+
+This repository provides a Docker-based setup for a GPU-enabled JupyterHub environment configured for the MBDA framework.
+
+## Modified by:
+Orhan Bayrak  
+Original Author: José Camacho (josecamacho@ugr.es)  
+Last Modification: July 2025
+
+## Installation Steps
+----------------------------------------------------------
+1. **Clone this repository**:  
+  ```bash
+  git clone https://github.com/0rhanbayrak/MBDA_GPU
+  cd your-repo-name
+
+2.Build the Docker image:
+  sh build.sh
+
+3. Run the Docker container:
+  docker run --gpus all -p 8000:8000 basejupyter_mbda_gpu
+
+4. Access the JupyterHub:
+  Open your browser and go to:
+  http://localhost:8000
+
+----------------------------------------------------------
+Notes
+The container includes:
+
+GPU-enabled PyTorch (CUDA 12.1)
+
+NativeAuthenticator (GitHub version)
+
+FCParser and MEDA-Toolbox cloned from their official repositories
+
+No SSL is configured. If needed, reverse proxy with HTTPS can be added separately.
