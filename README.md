@@ -1,116 +1,79 @@
-# Image Compression and MBDA GPU Framework
+# Jupyter-based MBDA Framework with GPU Support
 
-This repository combines two main components:
+This repository provides a Docker-based setup for a GPU-enabled JupyterHub environment configured for the MBDA framework.
 
-1. Image Compression Project using FFT and Tucker Decomposition  
-2. GPU-enabled JupyterHub (MBDA Framework) using Docker  
+## Modified by:
+Orhan Bayrak  
+Original Author: José Camacho (josecamacho@ugr.es)
+Last Modification: July 2025
 
----
+1)
+*****************************************************
+Requirements
+Before building or running this project, please make sure the following components are installed and properly configured on your machine:
 
-## Part 1 — Image Compression with FFT and Tucker Decomposition
+--Docker Desktop
+⚠️ Docker Desktop must remain open throughout the build and run processes (image building, container execution, JupyterHub usage, etc.)
 
-This project explores image compression and reconstruction using advanced tensor decomposition techniques. The objective is to compare:
+--Git
+  Required to clone this repository and pull additional dependencies from GitHub.
 
-- Spatial Tucker Decomposition  
-- FFT-Tucker Decomposition (Fast Fourier Transform + Tucker)
+--NVIDIA GPU + CUDA Drivers (Optional but recommended)
+  For GPU acceleration with PyTorch.
+  Make sure your system has compatible CUDA drivers installed (CUDA 12.1+)
 
----
+--Internet connection
+  Required during the first build to fetch required packages and clone external repositories.
+*****************************************************
 
-### Key Highlights
 
-- Memory-efficient image compression pipeline  
-- FFT, Tucker decomposition, and GPU acceleration  
-- Dataset of approximately 900 cat images  
-- UMAP and SOM used for clustering (final cleaning done manually)  
-- Custom GPU-enabled JupyterHub environment for experiments  
+2)
+## Installation Steps
+----------------------------------------------------------
+1. **Clone this repository**:  
+  ```bash
+  git clone https://github.com/0rhanbayrak/MBDA_GPU
 
----
+2.Build the Docker image:
+  2.1 -> sh build.sh
+  2.2 -> If you use windows:
+    Write:
+    "
+    docker rmi basejupyter_mbda_gpu:latest
+    docker build -t basejupyter_mbda_gpu:latest
+    "
+    directly to the terminal.
+    WARNING:Docker Desktop must be open during these steps.
 
-### Memory Size Comparison
+3. Run the Docker container:
+  docker run --gpus all -p 8000:8000 basejupyter_mbda_gpu
 
-| Stage | Approx. Size | Description |
-|------|------:|-------------|
-| Original dataset | ~342 MB | Raw images as float64 tensors |
-| After RFFT | ~173 MB | Reduced spectrum using symmetry |
-| After Tucker | ~3.3 MB | Core tensor + factor matrices |
+4. Access the JupyterHub:
+  Open your browser and go to:
+  http://localhost:8000
 
----
+5. Create a new account for local JupyterHub and sign in.
 
-### Results
+EXTRA:
+  If you will get following error:
+  A module that was compiled using NumPy 1.x cannot be run in
+  NumPy 2.1.2 as it may crash. To support both 1.x and 2.x
+  versions of NumPy, modules must be compiled with NumPy 2.0.
+  Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
 
-- ~100× compression ratio  
-- >99% reconstruction accuracy  
-- Consistent performance improvement over comparable methods  
-- Completed in 3.5 months  
+  It is because some PyTorch versions do not support Numpy 2.You need to downgrade the numpy version with following terminal command:
+  pip install numpy==1.26.4 --force-reinstall --no-cache-dir
+----------------------------------------------------------
 
----
 
-### Methods
+3)
+Notes:
+The container includes:
 
-- Tucker Decomposition (core tensor + factor matrices)  
-- FFT / RFFT (frequency-domain compression)  
-- Mode-n unfolding and n-mode product  
-- Visualization: error maps, PLS analysis, clustering  
+GPU-enabled PyTorch (CUDA 12.1)
 
----
+NativeAuthenticator (GitHub version)
 
-### Future Work
+FCParser and MEDA-Toolbox cloned from their official repositories
 
-- CP decomposition  
-- Larger real-world datasets  
-- Real-time compression systems  
-
----
-
-### Acknowledgements
-
-- Prof. Michael Sorochan Armstrong  
-- José Camacho Páez  
-
-Supported by:
-
-- MuSTARD Project — PID2023-1523010B-IOO  
-- Agencia Estatal de Investigación (Spain)  
-- European Regional Development Fund  
-- Horizon Europe (MAHOD) — 101106986  
-
----
-
-### Development Context
-
-Developed during an Erasmus+ internship at the Computational Data Science (CoDaS) Lab, University of Granada.
-
----
-
-## Part 2 — Jupyter-based MBDA Framework with GPU Support
-
-This section provides a Docker-based setup for a GPU-enabled JupyterHub environment configured for the MBDA framework.
-
----
-
-### Maintainers
-
-- Modified by: Orhan Bayrak  
-- Original Author: José Camacho (josecamacho@ugr.es)  
-- Last Modification: July 2025  
-
----
-
-### Requirements
-
-Ensure the following are installed:
-
-- Docker Desktop (must remain running during all steps)  
-- Git  
-- NVIDIA GPU with CUDA 12.1+ (optional but recommended)  
-- Internet connection (for initial build)  
-
----
-
-### Installation
-
-#### 1. Clone the repository
-
-```bash
-git clone https://github.com/0rhanbayrak/MBDA_GPU
-cd MBDA_GPU
+No SSL is configured. If needed, reverse proxy with HTTPS can be added separately.
