@@ -36,8 +36,26 @@ Before building or running this project, ensure the following components are ins
 
 ## Installation
 
-### 1. Clone the Repository
-
-```bash
+# 1. Clone the repository
 git clone https://github.com/0rhanbayrak/MBDA_GPU
 cd MBDA_GPU
+
+# 2. Build the Docker image
+
+# Linux / macOS
+sh build.sh
+
+# Windows (run manually if needed)
+docker rmi basejupyter_mbda_gpu:latest
+docker build -t basejupyter_mbda_gpu:latest .
+
+# 3. Run the container
+docker run --gpus all -p 8000:8000 basejupyter_mbda_gpu
+
+# 4. Access JupyterHub
+# Open in browser:
+# http://localhost:8000
+
+# 5. Create an account
+# - Register a new user
+# - Log in to start using JupyterHub
