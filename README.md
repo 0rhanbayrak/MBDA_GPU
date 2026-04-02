@@ -36,6 +36,7 @@ Before building or running this project, ensure the following components are ins
 
 ## Installation
 
+```bash
 # 1. Clone the repository
 git clone https://github.com/0rhanbayrak/MBDA_GPU
 cd MBDA_GPU
