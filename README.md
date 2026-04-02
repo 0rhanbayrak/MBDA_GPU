@@ -2,78 +2,42 @@
 
 This repository provides a Docker-based setup for a GPU-enabled JupyterHub environment configured for the MBDA framework.
 
-## Modified by:
-Orhan Bayrak  
-Original Author: José Camacho (josecamacho@ugr.es)
-Last Modification: July 2025
+---
 
-1)
-*****************************************************
-Requirements
-Before building or running this project, please make sure the following components are installed and properly configured on your machine:
+## Maintainers
 
---Docker Desktop
-⚠️ Docker Desktop must remain open throughout the build and run processes (image building, container execution, JupyterHub usage, etc.)
+- **Modified by:** Orhan Bayrak  
+- **Original Author:** José Camacho (josecamacho@ugr.es)  
+- **Last Modification:** July 2025  
 
---Git
-  Required to clone this repository and pull additional dependencies from GitHub.
+---
 
---NVIDIA GPU + CUDA Drivers (Optional but recommended)
-  For GPU acceleration with PyTorch.
-  Make sure your system has compatible CUDA drivers installed (CUDA 12.1+)
+## Requirements
 
---Internet connection
-  Required during the first build to fetch required packages and clone external repositories.
-*****************************************************
+Before building or running this project, ensure the following components are installed and properly configured:
 
+### Docker Desktop
+- Must be installed and **running at all times** during:
+  - Image build
+  - Container execution
+  - JupyterHub usage
 
-2)
-## Installation Steps
-----------------------------------------------------------
-1. **Clone this repository**:  
-  ```bash
-  git clone https://github.com/0rhanbayrak/MBDA_GPU
+### Git
+- Required to clone this repository and fetch dependencies
 
-2.Build the Docker image:
-  2.1 -> sh build.sh
-  2.2 -> If you use windows:
-    Write:
-    "
-    docker rmi basejupyter_mbda_gpu:latest
-    docker build -t basejupyter_mbda_gpu:latest
-    "
-    directly to the terminal.
-    WARNING:Docker Desktop must be open during these steps.
+### NVIDIA GPU + CUDA Drivers (Optional but Recommended)
+- Required for GPU acceleration with PyTorch
+- Ensure compatible CUDA drivers are installed (**CUDA 12.1+**)
 
-3. Run the Docker container:
-  docker run --gpus all -p 8000:8000 basejupyter_mbda_gpu
+### Internet Connection
+- Required during the initial build to download dependencies
 
-4. Access the JupyterHub:
-  Open your browser and go to:
-  http://localhost:8000
+---
 
-5. Create a new account for local JupyterHub and sign in.
+## Installation
 
-EXTRA:
-  If you will get following error:
-  A module that was compiled using NumPy 1.x cannot be run in
-  NumPy 2.1.2 as it may crash. To support both 1.x and 2.x
-  versions of NumPy, modules must be compiled with NumPy 2.0.
-  Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+### 1. Clone the Repository
 
-  It is because some PyTorch versions do not support Numpy 2.You need to downgrade the numpy version with following terminal command:
-  pip install numpy==1.26.4 --force-reinstall --no-cache-dir
-----------------------------------------------------------
-
-
-3)
-Notes:
-The container includes:
-
-GPU-enabled PyTorch (CUDA 12.1)
-
-NativeAuthenticator (GitHub version)
-
-FCParser and MEDA-Toolbox cloned from their official repositories
-
-No SSL is configured. If needed, reverse proxy with HTTPS can be added separately.
+```bash
+git clone https://github.com/0rhanbayrak/MBDA_GPU
+cd MBDA_GPU
